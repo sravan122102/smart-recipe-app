@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smart Recipe Suggestion System — Discover recipes based on ingredients you already have. AI-powered matching, substitutions, and step-by-step cooking instructions.">
+    <title>Smart Recipe Suggestion System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- LOADING OVERLAY                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="loader-content">
+            <div class="loader-spinner">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring"></div>
+            </div>
+            <p class="loader-text">Finding the best recipes for you...</p>
+            <p class="loader-subtext">Our AI chef is working its magic</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- TOAST CONTAINER                                            -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SCREEN 1: INGREDIENT INPUT                                 -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="input-screen" class="screen screen-active">
+        <div class="hero-section">
+            <div class="hero-glow"></div>
+            <div class="hero-content">
+                <div class="logo-icon">🍳</div>
+                <h1>Smart Recipe <span class="accent">Suggestion</span></h1>
+                <p class="hero-subtitle">Tell us what's in your kitchen, and our AI chef will find the perfect recipes for you.</p>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-card glass-card">
+                <h2>What ingredients do you have?</h2>
+                <p class="input-hint">Type to search and add ingredients (minimum 2 required)</p>
+
+                <div class="input-wrapper">
+                    <div id="ingredient-tags" class="ingredient-tags"></div>
+                    <div class="autocomplete-wrapper">
+                        <input
+                            type="text"
+                            id="ingredient-input"
+                            class="ingredient-input"
+                            placeholder="Start typing an ingredient..."
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+                        <div id="autocomplete-dropdown" class="autocomplete-dropdown hidden"></div>
+                    </div>
+                </div>
+
+                <div class="input-actions">
+                    <span id="ingredient-count" class="ingredient-count">0 ingredients selected</span>
+                    <button id="find-recipes-btn" class="btn-primary disabled" disabled>
+                        <span class="btn-icon">🔍</span>
+                        <span class="btn-text">Find Recipes</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SCREEN 2: RECIPE RESULTS                                   -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="results-screen" class="screen">
+        <header class="results-header">
+            <button id="back-to-input" class="btn-back">
+                <span>←</span> New Search
+            </button>
+            <h2>Recipes for You</h2>
+            <p id="results-summary" class="results-summary"></p>
+        </header>
+
+        <div id="recipe-cards-container" class="recipe-cards-grid"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SCREEN 3: RECIPE DETAIL                                    -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="detail-screen" class="screen">
+        <header class="detail-header">
+            <button id="back-to-results" class="btn-back">
+                <span>←</span> Back to Results
+            </button>
+        </header>
+
+        <div id="recipe-detail-content" class="recipe-detail-content"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
