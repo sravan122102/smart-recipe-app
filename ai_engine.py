@@ -36,13 +36,15 @@ def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=3000, ret
                 ],
                 temperature=temperature,
                 max_tokens=max_tokens,
-                response_format={"type": "json_object"},
             )
 
             result_text = response.choices[0].message.content.strip()
-            # Clean up any stray markdown fences
-            result_text = re.sub(r"^```(?:json)?\s*", "", result_text)
-            result_text = re.sub(r"\s*```$", "", result_text)
+            
+            # Extract JSON block using regex to ignore any surrounding conversational text
+            json_match = re.search(r"\{[\s\S]*\}", result_text)
+            if json_match:
+                result_text = json_match.group(0)
+                
             return json.loads(result_text)
 
         except Exception as e:
