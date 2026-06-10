@@ -716,7 +716,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       toast.classList.add('toast-exit');
       setTimeout(() => toast.remove(), 400);
-    }, 4000);
+    }, 1500);
   };
 
   // ─── 10. Helpers ────────────────────────────────────────

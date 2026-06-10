@@ -252,7 +252,8 @@ def create_app():
             return jsonify({"error": "Missing recipe data"}), 400
         
         recipe = data["recipe"]
-        title = recipe.get("title", "Unknown Recipe")
+        # AI Engine returns "name", not "title"
+        title = recipe.get("name", "Unknown Recipe")
         
         # Check if already saved
         existing = SavedRecipe.query.filter_by(user_id=current_user.id, recipe_title=title).first()
