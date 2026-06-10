@@ -13,5 +13,5 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 7860
 
-# Command to run the application using Gunicorn
-CMD ["gunicorn", "-b", "0.0.0.0:7860", "app:app"]
+# Command to run the application using Gunicorn (uses the PORT environment variable)
+CMD gunicorn -b 0.0.0.0:${PORT:-10000} app:app

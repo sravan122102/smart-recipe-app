@@ -11,15 +11,23 @@ import time
 from groq import Groq
 from config import GROQ_API_KEY, GROQ_MODEL
 
-# Initialize the Groq client
-client = Groq(api_key=GROQ_API_KEY)
+# We initialize the client lazily to prevent crashing the server on boot if the key is missing
+_client = None
+
+def get_client():
+    global _client
+    if _client is None:
+        if not GROQ_API_KEY:
+            raise ValueError("GROQ_API_KEY is not set. Please add it to the environment variables.")
+        _client = Groq(api_key=GROQ_API_KEY)
+    return _client
 
 
 def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=8000, retries=3):
     """Call Groq API with automatic retry on rate-limit errors."""
     for attempt in range(retries):
         try:
-            response = client.chat.completions.create(
+            response = get_client().chat.completions.create(
                 model=GROQ_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
