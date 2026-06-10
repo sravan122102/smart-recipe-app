@@ -130,6 +130,77 @@ body::before {
 }
 
 
+/* ── Top Navigation ─────────────────────────────────────────── */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(10, 10, 15, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-subtle);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-brand {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-hover);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.btn-outline:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+}
+
+.btn-text {
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color var(--transition-base);
+}
+
+.btn-text:hover {
+    color: var(--accent-light);
+}
+
+#nav-user-menu {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
 /* ═══════════════════════════════════════════════════════════════
    SCREEN 1: INGREDIENT INPUT
    ═══════════════════════════════════════════════════════════════ */
@@ -666,6 +737,37 @@ body::before {
     border-radius: var(--radius-lg);
     padding: 32px;
     margin-bottom: 32px;
+    position: relative;
+}
+
+.btn-wishlist {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: var(--bg-input);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-base);
+}
+
+.btn-wishlist:hover {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
+}
+
+.btn-wishlist.saved {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: rgba(239, 68, 68, 0.5);
+    color: #ef4444;
 }
 
 .detail-title {

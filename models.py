@@ -36,3 +36,33 @@ class SearchCache(db.Model):
 
     def __repr__(self):
         return f"<SearchCache {self.ingredient_key[:40]}>"
+
+
+from flask_login import UserMixin
+
+class User(db.Model, UserMixin):
+    """User account model for Google Login."""
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    google_id = db.Column(db.String(100), unique=True, nullable=False, index=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
+
+    # Relationship to saved recipes
+    saved_recipes = db.relationship('SavedRecipe', backref='user', lazy=True)
+
+
+class SavedRecipe(db.Model):
+    """Stores recipes a user has saved to their wishlist."""
+    __tablename__ = "saved_recipes"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    
+    # Store the exact recipe JSON so it looks exactly as generated
+    recipe_json = db.Column(db.Text, nullable=False)
+    recipe_title = db.Column(db.String(200), nullable=False)
+    
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))

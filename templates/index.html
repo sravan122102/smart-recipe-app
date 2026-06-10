@@ -11,6 +11,20 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- NAVIGATION BAR                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <nav class="top-nav">
+        <div class="nav-brand">🍳 Smart Recipe AI</div>
+        <div class="nav-links" id="nav-auth-container">
+            <!-- Will be populated by JS based on auth state -->
+            <button id="nav-login-btn" class="btn-outline hidden">Login with Google</button>
+            <div id="nav-user-menu" class="hidden">
+                <button id="nav-dashboard-btn" class="btn-text">My Wishlist</button>
+                <button id="nav-logout-btn" class="btn-outline">Logout</button>
+            </div>
+        </div>
+    </nav>
 
     <!-- ═══════════════════════════════════════════════════════════ -->
     <!-- LOADING OVERLAY                                            -->
@@ -102,6 +116,23 @@
         </header>
 
         <div id="recipe-detail-content" class="recipe-detail-content"></div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- SCREEN 4: WISHLIST DASHBOARD                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="dashboard-screen" class="screen">
+        <header class="results-header">
+            <button id="back-to-input-from-dashboard" class="btn-back">
+                <span>←</span> Back to Search
+            </button>
+            <h2>My Recipe Wishlist</h2>
+            <p class="results-summary">Your saved culinary inspirations</p>
+        </header>
+
+        <div id="wishlist-cards-container" class="recipe-cards-grid">
+            <!-- Wishlist cards go here -->
+        </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>

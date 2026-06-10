@@ -5,12 +5,22 @@ Routes:
   GET  /                  → Serve the single-page app
   GET  /api/ingredients   → Return all ingredient names for autocomplete
   POST /api/find-recipes  → Run the full AI pipeline and return enriched recipes
+  GET  /login             → Redirect to Google OAuth
+  GET  /auth              → Google OAuth callback
+  GET  /logout            → Log out user
+  GET  /api/user          → Return current logged-in user data
+  GET  /api/wishlist      → Get user's saved recipes
+  POST /api/wishlist      → Save a recipe to the wishlist
 """
 
+import os
 import json
 from datetime import datetime, timezone, timedelta
-from flask import Flask, render_template, request, jsonify
-from models import db, Ingredient, SearchCache
+from flask import Flask, render_template, request, jsonify, redirect, url_for, session
+from authlib.integrations.flask_client import OAuth
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+
+from models import db, Ingredient, SearchCache, User, SavedRecipe
 from ai_engine import process_pipeline
 
 
@@ -24,10 +34,122 @@ def create_app():
     # Initialize database
     db.init_app(app)
 
+    # Initialize Authlib for Google Login
+    oauth = OAuth(app)
+    google = oauth.register(
+        name='google',
+        client_id=app.config.get('GOOGLE_CLIENT_ID'),
+        client_secret=app.config.get('GOOGLE_CLIENT_SECRET'),
+        server_metadata_url='https://accounts.google.com/.well-known/openid-configuration',
+        client_kwargs={'scope': 'openid email profile'},
+    )
+
+    # Initialize Flask-Login
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
+
     with app.app_context():
         db.create_all()
 
-    # ── Routes ──────────────────────────────────────────────────────────
+    # ── Auth Routes ──────────────────────────────────────────────────────
+
+    @app.route("/login")
+    def login():
+        """Redirect to Google Login."""
+        redirect_uri = url_for('auth', _external=True)
+        return google.authorize_redirect(redirect_uri)
+
+    @app.route("/auth")
+    def auth():
+        """Google Login Callback."""
+        token = google.authorize_access_token()
+        userinfo = token.get('userinfo')
+        if userinfo:
+            email = userinfo['email']
+            google_id = userinfo['sub']
+            name = userinfo['name']
+
+            # Check if user exists
+            user = User.query.filter_by(google_id=google_id).first()
+            if not user:
+                # Create new user
+                user = User(google_id=google_id, email=email, name=name)
+                db.session.add(user)
+                db.session.commit()
+            
+            login_user(user)
+        return redirect(url_for('index'))
+
+    @app.route("/logout")
+    def logout():
+        """Log out the user."""
+        logout_user()
+        return redirect(url_for('index'))
+
+    @app.route("/api/user", methods=["GET"])
+    def get_current_user():
+        """Return current user info for frontend."""
+        if current_user.is_authenticated:
+            return jsonify({
+                "is_authenticated": True,
+                "name": current_user.name,
+                "email": current_user.email
+            })
+        return jsonify({"is_authenticated": False})
+
+
+    # ── Wishlist Routes ──────────────────────────────────────────────────
+
+    @app.route("/api/wishlist", methods=["GET"])
+    @login_required
+    def get_wishlist():
+        """Get all saved recipes for the current user."""
+        saved = SavedRecipe.query.filter_by(user_id=current_user.id).order_by(SavedRecipe.created_at.desc()).all()
+        recipes = []
+        for s in saved:
+            try:
+                recipe_data = json.loads(s.recipe_json)
+                recipe_data["saved_id"] = s.id
+                recipes.append(recipe_data)
+            except json.JSONDecodeError:
+                pass
+        return jsonify({"saved_recipes": recipes})
+
+    @app.route("/api/wishlist", methods=["POST"])
+    @login_required
+    def save_recipe():
+        """Save a recipe to the wishlist."""
+        data = request.get_json()
+        if not data or "recipe" not in data:
+            return jsonify({"error": "Missing recipe data"}), 400
+        
+        recipe = data["recipe"]
+        title = recipe.get("title", "Unknown Recipe")
+        
+        # Check if already saved
+        existing = SavedRecipe.query.filter_by(user_id=current_user.id, recipe_title=title).first()
+        if existing:
+            return jsonify({"message": "Recipe already in wishlist"}), 200
+
+        try:
+            saved_recipe = SavedRecipe(
+                user_id=current_user.id,
+                recipe_json=json.dumps(recipe),
+                recipe_title=title
+            )
+            db.session.add(saved_recipe)
+            db.session.commit()
+            return jsonify({"message": "Saved successfully", "saved_id": saved_recipe.id}), 201
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({"error": str(e)}), 500
+
+
+    # ── Core App Routes ──────────────────────────────────────────────────
 
     @app.route("/")
     def index():
@@ -54,10 +176,7 @@ def create_app():
     def find_recipes():
         """
         Run the full 5-module AI pipeline.
-
         Expects JSON body: {"ingredients": ["Onion", "Tomato", "Egg"]}
-        Returns enriched recipe data with matching scores, missing ingredients,
-        and substitution suggestions.
         """
         data = request.get_json()
 
@@ -74,7 +193,7 @@ def create_app():
         # Clean and normalize ingredient names
         ingredients = [ing.strip().title() for ing in ingredients if ing.strip()]
 
-        # Check cache first (cache key = sorted ingredient list)
+        # Check cache first
         cache_key = "|".join(sorted(ingredients)).lower()
         cached = SearchCache.query.filter_by(ingredient_key=cache_key).first()
 
@@ -85,8 +204,11 @@ def create_app():
                 return jsonify(json.loads(cached.result_json))
 
             # Stale cache — delete it
-            db.session.delete(cached)
-            db.session.commit()
+            try:
+                db.session.delete(cached)
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
 
         # Run the AI pipeline
         result = process_pipeline(ingredients)

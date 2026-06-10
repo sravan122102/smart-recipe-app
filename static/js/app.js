@@ -31,16 +31,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const detailContent       = document.getElementById('recipe-detail-content');
   const loadingOverlay      = document.getElementById('loading-overlay');
   const toastContainer      = document.getElementById('toast-container');
+  
+  // Navigation & Auth Elements
+  const navLoginBtn         = document.getElementById('nav-login-btn');
+  const navUserMenu         = document.getElementById('nav-user-menu');
+  const navDashboardBtn     = document.getElementById('nav-dashboard-btn');
+  const navLogoutBtn        = document.getElementById('nav-logout-btn');
+  
+  // Dashboard Elements
+  const dashboardScreen     = document.getElementById('dashboard-screen');
+  const wishlistContainer   = document.getElementById('wishlist-cards-container');
+
+  // Auth State
+  let currentUser = null;
 
   // ─── 1. Initialize ─────────────────────────────────────
   const init = async () => {
     try {
-      const res = await fetch('/api/ingredients');
-      const data = await res.json();
-      allIngredients = data.ingredients || [];
+      // Fetch Ingredients & User State in parallel
+      const [ingRes, userRes] = await Promise.all([
+        fetch('/api/ingredients'),
+        fetch('/api/user')
+      ]);
+      const ingData = await ingRes.json();
+      allIngredients = ingData.ingredients || [];
+      
+      const userData = await userRes.json();
+      if (userData.is_authenticated) {
+        currentUser = userData;
+        navLoginBtn.classList.add('hidden');
+        navUserMenu.classList.remove('hidden');
+      } else {
+        navLoginBtn.classList.remove('hidden');
+        navUserMenu.classList.add('hidden');
+      }
     } catch (err) {
-      console.error('Failed to load ingredients:', err);
-      showToast('Could not load ingredients. Please refresh.', 'error');
+      console.error('Failed to initialize:', err);
     }
     setupListeners();
     updateButtonState();
@@ -64,7 +90,53 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('back-to-input')
       ?.addEventListener('click', () => showScreen('input-screen'));
     document.getElementById('back-to-results')
-      ?.addEventListener('click', () => showScreen('results-screen'));
+      ?.addEventListener('click', () => {
+        if (activeRecipe && activeRecipe.is_from_wishlist) {
+            showScreen('dashboard-screen');
+        } else {
+            showScreen('results-screen');
+        }
+      });
+      
+    document.getElementById('back-to-input-from-dashboard')
+      ?.addEventListener('click', () => showScreen('input-screen'));
+
+    // Auth & Nav Listeners
+    navLoginBtn?.addEventListener('click', () => window.location.href = '/login');
+    navLogoutBtn?.addEventListener('click', () => window.location.href = '/logout');
+    navDashboardBtn?.addEventListener('click', loadDashboard);
+  };
+
+  // ─── Wishlist Dashboard ────────────────────────────────
+  const loadDashboard = async () => {
+    showScreen('dashboard-screen');
+    wishlistContainer.innerHTML = '<div style="text-align:center;width:100%;padding:40px;">Loading your wishlist...</div>';
+    
+    try {
+      const res = await fetch('/api/wishlist');
+      const data = await res.json();
+      const saved = data.saved_recipes || [];
+      
+      if (saved.length === 0) {
+        wishlistContainer.innerHTML = `
+          <div class="no-results">
+            <div class="no-results-icon">❤️</div>
+            <h3>Your Wishlist is Empty</h3>
+            <p>Recipes you save will appear here.</p>
+          </div>`;
+        return;
+      }
+      
+      wishlistContainer.innerHTML = '';
+      saved.forEach((recipe, i) => {
+        recipe.is_from_wishlist = true; // flag to route back correctly
+        const card = createRecipeCardElement(recipe, i);
+        card.addEventListener('click', () => showRecipeDetail(recipe));
+        wishlistContainer.appendChild(card);
+      });
+    } catch (err) {
+      showToast('Failed to load wishlist.', 'error');
+    }
   };
 
   // ─── 2. Autocomplete ───────────────────────────────────
@@ -285,6 +357,13 @@ document.addEventListener('DOMContentLoaded', () => {
     recipeCardsContainer.insertAdjacentHTML('afterbegin', svgDefs);
 
     recipes.forEach((recipe, index) => {
+      const card = createRecipeCardElement(recipe, index);
+      card.addEventListener('click', () => showRecipeDetail(recipe));
+      recipeCardsContainer.appendChild(card);
+    });
+  };
+
+  const createRecipeCardElement = (recipe, index) => {
       const score = recipe.match_score || 0;
       const name = recipe.name || 'Untitled Recipe';
       const cuisine = recipe.cuisine_type || 'General';
@@ -329,10 +408,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <span class="card-meta-item"><span class="meta-icon">🍽️</span> ${servings} servings</span>
         </div>
       `;
-
-      card.addEventListener('click', () => showRecipeDetail(recipe));
-      recipeCardsContainer.appendChild(card);
-    });
+      return card;
   };
 
   // ─── 6. Recipe Detail ──────────────────────────────────
@@ -366,6 +442,9 @@ document.addEventListener('DOMContentLoaded', () => {
     detailContent.innerHTML = `
       <!-- Summary Panel -->
       <div class="detail-summary">
+        ${currentUser && !recipe.is_from_wishlist ? `<button id="btn-save-wishlist" class="btn-wishlist">❤️ Save to Wishlist</button>` : ''}
+        ${recipe.is_from_wishlist ? `<div style="position:absolute;top:24px;right:24px;color:#ef4444;font-size:0.875rem;font-weight:600;">❤️ Saved</div>` : ''}
+        
         <div class="detail-title">${name}</div>
         <div class="detail-cuisine">
           <span class="cuisine-badge">${cuisine}</span>
@@ -460,6 +539,36 @@ document.addEventListener('DOMContentLoaded', () => {
         renderDynamicIngredients();
       }
     });
+
+    // Wire Wishlist Save button
+    const saveBtn = document.getElementById('btn-save-wishlist');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', async () => {
+        saveBtn.disabled = true;
+        saveBtn.innerHTML = 'Saving...';
+        try {
+          const res = await fetch('/api/wishlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ recipe: activeRecipe })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            saveBtn.classList.add('saved');
+            saveBtn.innerHTML = '❤️ Saved';
+            showToast('Recipe saved to your wishlist!', 'success');
+          } else {
+            saveBtn.disabled = false;
+            saveBtn.innerHTML = '❤️ Save to Wishlist';
+            showToast(data.message || data.error, 'error');
+          }
+        } catch (e) {
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '❤️ Save to Wishlist';
+          showToast('Network error while saving.', 'error');
+        }
+      });
+    }
 
     renderDynamicIngredients();
     showScreen('detail-screen');
@@ -582,7 +691,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── 7. Screen Navigation ──────────────────────────────
   const showScreen = (screenId) => {
-    [inputScreen, resultsScreen, detailScreen].forEach(s => {
+    [inputScreen, resultsScreen, detailScreen, dashboardScreen].forEach(s => {
       if (s) s.classList.remove('screen-active');
     });
 
