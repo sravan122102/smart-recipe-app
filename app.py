@@ -120,6 +120,7 @@ def create_app():
             ("Rasam Powder", "Spices"), ("Biryani Masala", "Spices"), ("Chaat Masala", "Spices"),
             ("Amchur (Dry Mango Powder)", "Spices"), ("Hing (Asafoetida)", "Spices"), ("Kashmiri Chilli Powder", "Spices"),
             ("Black Pepper Powder", "Spices"), ("Meat Masala", "Spices"), ("Kitchen King Masala", "Spices"),
+            ("Salt", "Spices"), ("Black Salt (Kala Namak)", "Spices"),
 
             # OILS & FATS
             ("Gingelly Oil (Sesame)", "Condiments"), ("Coconut Oil", "Condiments"), ("Groundnut Oil", "Condiments"),
