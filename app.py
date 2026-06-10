@@ -55,20 +55,67 @@ def create_app():
     with app.app_context():
         db.create_all()
         
-        # Seed the database with default ingredients if it's empty
-        if Ingredient.query.count() == 0:
-            default_ingredients = [
-                ("Tomato", "Vegetables"), ("Onion", "Vegetables"), ("Garlic", "Vegetables"),
-                ("Chicken Breast", "Meat"), ("Beef", "Meat"), ("Eggs", "Dairy & Eggs"),
-                ("Milk", "Dairy & Eggs"), ("Cheese", "Dairy & Eggs"), ("Butter", "Dairy & Eggs"),
-                ("Flour", "Pantry"), ("Sugar", "Pantry"), ("Salt", "Pantry"),
-                ("Black Pepper", "Spices"), ("Olive Oil", "Pantry"), ("Pasta", "Pantry"),
-                ("Rice", "Pantry"), ("Potato", "Vegetables"), ("Carrot", "Vegetables"),
-                ("Bell Pepper", "Vegetables"), ("Spinach", "Vegetables"), ("Noodles", "Pantry"),
-                ("Soy Sauce", "Pantry"), ("Ginger", "Vegetables"), ("Lemon", "Fruits")
-            ]
-            for name, category in default_ingredients:
-                db.session.add(Ingredient(name=name, category=category))
+        # Seed the database with a massive list of ingredients
+        massive_ingredients = [
+            # Vegetables
+            ("Tomato", "Vegetables"), ("Onion", "Vegetables"), ("Garlic", "Vegetables"), ("Potato", "Vegetables"),
+            ("Carrot", "Vegetables"), ("Bell Pepper", "Vegetables"), ("Spinach", "Vegetables"), ("Broccoli", "Vegetables"),
+            ("Cauliflower", "Vegetables"), ("Zucchini", "Vegetables"), ("Eggplant", "Vegetables"), ("Mushroom", "Vegetables"),
+            ("Celery", "Vegetables"), ("Cabbage", "Vegetables"), ("Lettuce", "Vegetables"), ("Cucumber", "Vegetables"),
+            ("Asparagus", "Vegetables"), ("Green Beans", "Vegetables"), ("Peas", "Vegetables"), ("Corn", "Vegetables"),
+            ("Sweet Potato", "Vegetables"), ("Kale", "Vegetables"), ("Leek", "Vegetables"), ("Brussels Sprouts", "Vegetables"),
+            ("Ginger", "Vegetables"), ("Scallion", "Vegetables"), ("Shallot", "Vegetables"), ("Radish", "Vegetables"),
+            # Fruits
+            ("Lemon", "Fruits"), ("Lime", "Fruits"), ("Apple", "Fruits"), ("Banana", "Fruits"),
+            ("Orange", "Fruits"), ("Strawberry", "Fruits"), ("Blueberry", "Fruits"), ("Raspberry", "Fruits"),
+            ("Avocado", "Fruits"), ("Pineapple", "Fruits"), ("Mango", "Fruits"), ("Peach", "Fruits"),
+            ("Pear", "Fruits"), ("Grapes", "Fruits"), ("Watermelon", "Fruits"), ("Coconut", "Fruits"),
+            # Meat & Poultry
+            ("Chicken Breast", "Meat"), ("Chicken Thigh", "Meat"), ("Whole Chicken", "Meat"), ("Beef", "Meat"),
+            ("Ground Beef", "Meat"), ("Steak", "Meat"), ("Pork", "Meat"), ("Bacon", "Meat"),
+            ("Sausage", "Meat"), ("Lamb", "Meat"), ("Turkey", "Meat"), ("Ham", "Meat"),
+            # Seafood
+            ("Salmon", "Seafood"), ("Tuna", "Seafood"), ("Shrimp", "Seafood"), ("Crab", "Seafood"),
+            ("Lobster", "Seafood"), ("Cod", "Seafood"), ("Tilapia", "Seafood"), ("Scallops", "Seafood"),
+            ("Clams", "Seafood"), ("Mussels", "Seafood"), ("Squid", "Seafood"), ("Anchovy", "Seafood"),
+            # Dairy & Eggs
+            ("Eggs", "Dairy & Eggs"), ("Milk", "Dairy & Eggs"), ("Butter", "Dairy & Eggs"), ("Cheese", "Dairy & Eggs"),
+            ("Cheddar Cheese", "Dairy & Eggs"), ("Mozzarella", "Dairy & Eggs"), ("Parmesan", "Dairy & Eggs"),
+            ("Heavy Cream", "Dairy & Eggs"), ("Sour Cream", "Dairy & Eggs"), ("Yogurt", "Dairy & Eggs"),
+            ("Cream Cheese", "Dairy & Eggs"), ("Feta Cheese", "Dairy & Eggs"), ("Ricotta", "Dairy & Eggs"),
+            # Pantry & Grains
+            ("Flour", "Pantry"), ("Sugar", "Pantry"), ("Brown Sugar", "Pantry"), ("Pasta", "Pantry"),
+            ("Rice", "Pantry"), ("Brown Rice", "Pantry"), ("Noodles", "Pantry"), ("Oats", "Pantry"),
+            ("Quinoa", "Pantry"), ("Bread", "Pantry"), ("Breadcrumbs", "Pantry"), ("Tortilla", "Pantry"),
+            ("Lentils", "Pantry"), ("Black Beans", "Pantry"), ("Chickpeas", "Pantry"), ("Kidney Beans", "Pantry"),
+            ("Honey", "Pantry"), ("Maple Syrup", "Pantry"), ("Peanut Butter", "Pantry"), ("Almonds", "Pantry"),
+            ("Walnuts", "Pantry"), ("Pecans", "Pantry"), ("Cashews", "Pantry"), ("Chocolate Chips", "Pantry"),
+            ("Cocoa Powder", "Pantry"), ("Vanilla Extract", "Pantry"), ("Baking Powder", "Pantry"), ("Baking Soda", "Pantry"),
+            ("Yeast", "Pantry"), ("Cornstarch", "Pantry"),
+            # Oils & Condiments
+            ("Olive Oil", "Condiments"), ("Vegetable Oil", "Condiments"), ("Canola Oil", "Condiments"), ("Sesame Oil", "Condiments"),
+            ("Soy Sauce", "Condiments"), ("Vinegar", "Condiments"), ("Balsamic Vinegar", "Condiments"), ("Apple Cider Vinegar", "Condiments"),
+            ("Ketchup", "Condiments"), ("Mustard", "Condiments"), ("Mayonnaise", "Condiments"), ("Hot Sauce", "Condiments"),
+            ("Worcestershire Sauce", "Condiments"), ("Fish Sauce", "Condiments"), ("Oyster Sauce", "Condiments"),
+            ("Sriracha", "Condiments"), ("Barbecue Sauce", "Condiments"), ("Tomato Paste", "Condiments"),
+            # Spices & Herbs
+            ("Salt", "Spices"), ("Black Pepper", "Spices"), ("Paprika", "Spices"), ("Cumin", "Spices"),
+            ("Cinnamon", "Spices"), ("Oregano", "Spices"), ("Basil", "Spices"), ("Thyme", "Spices"),
+            ("Rosemary", "Spices"), ("Parsley", "Spices"), ("Cilantro", "Spices"), ("Chili Powder", "Spices"),
+            ("Garlic Powder", "Spices"), ("Onion Powder", "Spices"), ("Nutmeg", "Spices"), ("Cloves", "Spices"),
+            ("Turmeric", "Spices"), ("Coriander", "Spices"), ("Ginger Powder", "Spices"), ("Red Pepper Flakes", "Spices"),
+            ("Bay Leaf", "Spices"), ("Curry Powder", "Spices"), ("Cardamom", "Spices"), ("Saffron", "Spices")
+        ]
+        
+        # Only add ingredients that don't already exist in the database
+        existing_ingredients = {i.name for i in Ingredient.query.with_entities(Ingredient.name).all()}
+        new_items = []
+        for name, category in massive_ingredients:
+            if name not in existing_ingredients:
+                new_items.append(Ingredient(name=name, category=category))
+        
+        if new_items:
+            db.session.bulk_save_objects(new_items)
             db.session.commit()
 
     # ── Auth Routes ──────────────────────────────────────────────────────
