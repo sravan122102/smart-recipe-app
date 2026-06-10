@@ -84,7 +84,7 @@ def create_app():
             ("Heavy Cream", "Dairy & Eggs"), ("Sour Cream", "Dairy & Eggs"), ("Yogurt", "Dairy & Eggs"),
             ("Cream Cheese", "Dairy & Eggs"), ("Feta Cheese", "Dairy & Eggs"), ("Ricotta", "Dairy & Eggs"),
             # Pantry & Grains
-            ("Flour", "Pantry"), ("Sugar", "Pantry"), ("Brown Sugar", "Pantry"), ("Pasta", "Pantry"),
+            ("Flour", "Pantry"), ("Whole Wheat Flour", "Pantry"), ("Wheat", "Pantry"), ("Sugar", "Pantry"), ("Brown Sugar", "Pantry"), ("Pasta", "Pantry"),
             ("Rice", "Pantry"), ("Brown Rice", "Pantry"), ("Noodles", "Pantry"), ("Oats", "Pantry"),
             ("Quinoa", "Pantry"), ("Bread", "Pantry"), ("Breadcrumbs", "Pantry"), ("Tortilla", "Pantry"),
             ("Lentils", "Pantry"), ("Black Beans", "Pantry"), ("Chickpeas", "Pantry"), ("Kidney Beans", "Pantry"),
@@ -104,7 +104,16 @@ def create_app():
             ("Rosemary", "Spices"), ("Parsley", "Spices"), ("Cilantro", "Spices"), ("Chili Powder", "Spices"),
             ("Garlic Powder", "Spices"), ("Onion Powder", "Spices"), ("Nutmeg", "Spices"), ("Cloves", "Spices"),
             ("Turmeric", "Spices"), ("Coriander", "Spices"), ("Ginger Powder", "Spices"), ("Red Pepper Flakes", "Spices"),
-            ("Bay Leaf", "Spices"), ("Curry Powder", "Spices"), ("Cardamom", "Spices"), ("Saffron", "Spices")
+            ("Bay Leaf", "Spices"), ("Curry Powder", "Spices"), ("Cardamom", "Spices"), ("Saffron", "Spices"),
+            # Indian Essentials
+            ("Ghee", "Dairy & Eggs"), ("Paneer", "Dairy & Eggs"), ("Curd", "Dairy & Eggs"), ("Yogurt", "Dairy & Eggs"),
+            ("Toor Dal", "Pantry"), ("Moong Dal", "Pantry"), ("Masoor Dal", "Pantry"), ("Urad Dal", "Pantry"), ("Chana Dal", "Pantry"),
+            ("Rajma", "Pantry"), ("Chole", "Pantry"), ("Kabuli Chana", "Pantry"), ("Black Eyed Peas", "Pantry"),
+            ("Basmati Rice", "Pantry"), ("Atta", "Pantry"), ("Maida", "Pantry"), ("Besan", "Pantry"), ("Sooji", "Pantry"),
+            ("Curry Leaves", "Herbs"), ("Mustard Seeds", "Spices"), ("Cumin Seeds", "Spices"), ("Asafoetida", "Spices"),
+            ("Turmeric Powder", "Spices"), ("Red Chili Powder", "Spices"), ("Garam Masala", "Spices"), ("Coriander Powder", "Spices"),
+            ("Kasuri Methi", "Spices"), ("Green Cardamom", "Spices"), ("Black Cardamom", "Spices"), ("Star Anise", "Spices"),
+            ("Fennel Seeds", "Spices"), ("Tamarind", "Condiments"), ("Jaggery", "Pantry"), ("Coconut Milk", "Pantry"), ("Green Chilies", "Vegetables")
         ]
         
         # Only add ingredients that don't already exist in the database
