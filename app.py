@@ -57,63 +57,107 @@ def create_app():
         
         # Seed the database with a massive list of ingredients
         massive_ingredients = [
-            # Vegetables
-            ("Tomato", "Vegetables"), ("Onion", "Vegetables"), ("Garlic", "Vegetables"), ("Potato", "Vegetables"),
-            ("Carrot", "Vegetables"), ("Bell Pepper", "Vegetables"), ("Spinach", "Vegetables"), ("Broccoli", "Vegetables"),
-            ("Cauliflower", "Vegetables"), ("Zucchini", "Vegetables"), ("Eggplant", "Vegetables"), ("Mushroom", "Vegetables"),
-            ("Celery", "Vegetables"), ("Cabbage", "Vegetables"), ("Lettuce", "Vegetables"), ("Cucumber", "Vegetables"),
-            ("Asparagus", "Vegetables"), ("Green Beans", "Vegetables"), ("Peas", "Vegetables"), ("Corn", "Vegetables"),
-            ("Sweet Potato", "Vegetables"), ("Kale", "Vegetables"), ("Leek", "Vegetables"), ("Brussels Sprouts", "Vegetables"),
-            ("Ginger", "Vegetables"), ("Scallion", "Vegetables"), ("Shallot", "Vegetables"), ("Radish", "Vegetables"),
-            # Fruits
-            ("Lemon", "Fruits"), ("Lime", "Fruits"), ("Apple", "Fruits"), ("Banana", "Fruits"),
-            ("Orange", "Fruits"), ("Strawberry", "Fruits"), ("Blueberry", "Fruits"), ("Raspberry", "Fruits"),
-            ("Avocado", "Fruits"), ("Pineapple", "Fruits"), ("Mango", "Fruits"), ("Peach", "Fruits"),
-            ("Pear", "Fruits"), ("Grapes", "Fruits"), ("Watermelon", "Fruits"), ("Coconut", "Fruits"),
-            # Meat & Poultry
-            ("Chicken Breast", "Meat"), ("Chicken Thigh", "Meat"), ("Whole Chicken", "Meat"), ("Beef", "Meat"),
-            ("Ground Beef", "Meat"), ("Steak", "Meat"), ("Pork", "Meat"), ("Bacon", "Meat"),
-            ("Sausage", "Meat"), ("Lamb", "Meat"), ("Turkey", "Meat"), ("Ham", "Meat"),
-            # Seafood
-            ("Salmon", "Seafood"), ("Tuna", "Seafood"), ("Shrimp", "Seafood"), ("Crab", "Seafood"),
-            ("Lobster", "Seafood"), ("Cod", "Seafood"), ("Tilapia", "Seafood"), ("Scallops", "Seafood"),
-            ("Clams", "Seafood"), ("Mussels", "Seafood"), ("Squid", "Seafood"), ("Anchovy", "Seafood"),
-            # Dairy & Eggs
-            ("Eggs", "Dairy & Eggs"), ("Milk", "Dairy & Eggs"), ("Butter", "Dairy & Eggs"), ("Cheese", "Dairy & Eggs"),
-            ("Cheddar Cheese", "Dairy & Eggs"), ("Mozzarella", "Dairy & Eggs"), ("Parmesan", "Dairy & Eggs"),
-            ("Heavy Cream", "Dairy & Eggs"), ("Sour Cream", "Dairy & Eggs"), ("Yogurt", "Dairy & Eggs"),
-            ("Cream Cheese", "Dairy & Eggs"), ("Feta Cheese", "Dairy & Eggs"), ("Ricotta", "Dairy & Eggs"),
-            # Pantry & Grains
-            ("Flour", "Pantry"), ("Whole Wheat Flour", "Pantry"), ("Wheat", "Pantry"), ("Sugar", "Pantry"), ("Brown Sugar", "Pantry"), ("Pasta", "Pantry"),
-            ("Rice", "Pantry"), ("Brown Rice", "Pantry"), ("Noodles", "Pantry"), ("Oats", "Pantry"),
-            ("Quinoa", "Pantry"), ("Bread", "Pantry"), ("Breadcrumbs", "Pantry"), ("Tortilla", "Pantry"),
-            ("Lentils", "Pantry"), ("Black Beans", "Pantry"), ("Chickpeas", "Pantry"), ("Kidney Beans", "Pantry"),
-            ("Honey", "Pantry"), ("Maple Syrup", "Pantry"), ("Peanut Butter", "Pantry"), ("Almonds", "Pantry"),
-            ("Walnuts", "Pantry"), ("Pecans", "Pantry"), ("Cashews", "Pantry"), ("Chocolate Chips", "Pantry"),
-            ("Cocoa Powder", "Pantry"), ("Vanilla Extract", "Pantry"), ("Baking Powder", "Pantry"), ("Baking Soda", "Pantry"),
-            ("Yeast", "Pantry"), ("Cornstarch", "Pantry"),
-            # Oils & Condiments
-            ("Olive Oil", "Condiments"), ("Vegetable Oil", "Condiments"), ("Canola Oil", "Condiments"), ("Sesame Oil", "Condiments"),
-            ("Soy Sauce", "Condiments"), ("Vinegar", "Condiments"), ("Balsamic Vinegar", "Condiments"), ("Apple Cider Vinegar", "Condiments"),
-            ("Ketchup", "Condiments"), ("Mustard", "Condiments"), ("Mayonnaise", "Condiments"), ("Hot Sauce", "Condiments"),
-            ("Worcestershire Sauce", "Condiments"), ("Fish Sauce", "Condiments"), ("Oyster Sauce", "Condiments"),
-            ("Sriracha", "Condiments"), ("Barbecue Sauce", "Condiments"), ("Tomato Paste", "Condiments"),
-            # Spices & Herbs
-            ("Salt", "Spices"), ("Black Pepper", "Spices"), ("Paprika", "Spices"), ("Cumin", "Spices"),
-            ("Cinnamon", "Spices"), ("Oregano", "Spices"), ("Basil", "Spices"), ("Thyme", "Spices"),
-            ("Rosemary", "Spices"), ("Parsley", "Spices"), ("Cilantro", "Spices"), ("Chili Powder", "Spices"),
-            ("Garlic Powder", "Spices"), ("Onion Powder", "Spices"), ("Nutmeg", "Spices"), ("Cloves", "Spices"),
-            ("Turmeric", "Spices"), ("Coriander", "Spices"), ("Ginger Powder", "Spices"), ("Red Pepper Flakes", "Spices"),
-            ("Bay Leaf", "Spices"), ("Curry Powder", "Spices"), ("Cardamom", "Spices"), ("Saffron", "Spices"),
-            # Indian Essentials
-            ("Ghee", "Dairy & Eggs"), ("Paneer", "Dairy & Eggs"), ("Curd", "Dairy & Eggs"), ("Yogurt", "Dairy & Eggs"),
-            ("Toor Dal", "Pantry"), ("Moong Dal", "Pantry"), ("Masoor Dal", "Pantry"), ("Urad Dal", "Pantry"), ("Chana Dal", "Pantry"),
-            ("Rajma", "Pantry"), ("Chole", "Pantry"), ("Kabuli Chana", "Pantry"), ("Black Eyed Peas", "Pantry"),
-            ("Basmati Rice", "Pantry"), ("Atta", "Pantry"), ("Maida", "Pantry"), ("Besan", "Pantry"), ("Sooji", "Pantry"),
-            ("Curry Leaves", "Herbs"), ("Mustard Seeds", "Spices"), ("Cumin Seeds", "Spices"), ("Asafoetida", "Spices"),
-            ("Turmeric Powder", "Spices"), ("Red Chili Powder", "Spices"), ("Garam Masala", "Spices"), ("Coriander Powder", "Spices"),
-            ("Kasuri Methi", "Spices"), ("Green Cardamom", "Spices"), ("Black Cardamom", "Spices"), ("Star Anise", "Spices"),
-            ("Fennel Seeds", "Spices"), ("Tamarind", "Condiments"), ("Jaggery", "Pantry"), ("Coconut Milk", "Pantry"), ("Green Chilies", "Vegetables")
+            # RICE VARIETIES
+            ("Basmati Rice", "Pantry"), ("Sona Masoori Rice", "Pantry"), ("Ponni Rice", "Pantry"),
+            ("Seeraga Samba Rice", "Pantry"), ("Idli Rice (Puzhungal)", "Pantry"), ("Kolam Rice", "Pantry"),
+            ("Gobindobhog Rice", "Pantry"), ("Jeera Samba Rice", "Pantry"), ("Matta Rice", "Pantry"),
+            ("Bamboo Rice", "Pantry"), ("Kali Jeera Rice", "Pantry"), ("Red Rice", "Pantry"),
+
+            # WHEAT & FLOUR
+            ("Wheat (Godhumai)", "Pantry"), ("Maida (All Purpose)", "Pantry"), ("Atta (Whole Wheat)", "Pantry"),
+            ("Semolina (Sooji/Rava)", "Pantry"), ("Rice Flour", "Pantry"), ("Corn Flour", "Pantry"),
+            ("Besan (Chickpea Flour)", "Pantry"), ("Ragi Flour", "Pantry"), ("Bajra Flour", "Pantry"),
+            ("Jowar Flour", "Pantry"), ("Idiyappam Flour", "Pantry"), ("Puttu Flour", "Pantry"),
+
+            # LENTILS & DALS
+            ("Toor Dal", "Pantry"), ("Moong Dal", "Pantry"), ("Urad Dal", "Pantry"),
+            ("Chana Dal", "Pantry"), ("Masoor Dal", "Pantry"), ("Rajma (Kidney Beans)", "Pantry"),
+            ("Kabuli Chana (White Chickpea)", "Pantry"), ("Kala Chana (Black Chickpea)", "Pantry"),
+            ("Moth Beans", "Pantry"), ("Horsegram (Kollu)", "Pantry"), ("Cowpea (Lobia)", "Pantry"),
+            ("Whole Moong", "Pantry"), ("Whole Urad", "Pantry"), ("Val Dal", "Pantry"),
+
+            # VEGETABLES
+            ("Onion", "Vegetables"), ("Tomato", "Vegetables"), ("Potato", "Vegetables"),
+            ("Brinjal / Eggplant", "Vegetables"), ("Drumstick (Murungakkai)", "Vegetables"),
+            ("Raw Banana", "Vegetables"), ("Plantain Stem", "Vegetables"), ("Plantain Flower", "Vegetables"),
+            ("Bitter Gourd", "Vegetables"), ("Snake Gourd", "Vegetables"), ("Ridge Gourd", "Vegetables"),
+            ("Bottle Gourd (Lauki)", "Vegetables"), ("Ash Gourd", "Vegetables"), ("Ivy Gourd (Kovakkai)", "Vegetables"),
+            ("Raw Jackfruit", "Vegetables"), ("Yam (Senai Kizhangu)", "Vegetables"), ("Elephant Foot Yam", "Vegetables"),
+            ("Colocasia (Arbi)", "Vegetables"), ("Sweet Potato", "Vegetables"), ("Raw Mango", "Vegetables"),
+            ("Raw Papaya", "Vegetables"), ("Carrot", "Vegetables"), ("Beans (French Beans)", "Vegetables"),
+            ("Cluster Beans", "Vegetables"), ("Broad Beans", "Vegetables"), ("Capsicum", "Vegetables"),
+            ("Cauliflower", "Vegetables"), ("Cabbage", "Vegetables"), ("Broccoli", "Vegetables"),
+            ("Spinach (Palak)", "Vegetables"), ("Fenugreek Leaves (Methi)", "Vegetables"),
+            ("Drumstick Leaves", "Vegetables"), ("Amaranth Leaves", "Vegetables"), ("Curry Leaves", "Vegetables"),
+            ("Coriander Leaves", "Vegetables"), ("Mint Leaves", "Vegetables"), ("Spring Onion", "Vegetables"),
+            ("Leek", "Vegetables"), ("Radish (Mullangi)", "Vegetables"), ("Turnip", "Vegetables"),
+            ("Beetroot", "Vegetables"), ("Pumpkin", "Vegetables"), ("Corn / Maize", "Vegetables"),
+            ("Peas", "Vegetables"), ("Lady's Finger (Okra)", "Vegetables"), ("Tindora", "Vegetables"),
+            ("Raw Turmeric", "Vegetables"), ("Garlic", "Vegetables"), ("Ginger", "Vegetables"),
+            ("Green Chilli", "Vegetables"), ("Shallots", "Vegetables"),
+
+            # FRUITS
+            ("Mango", "Fruits"), ("Banana", "Fruits"), ("Coconut", "Fruits"), ("Tamarind", "Fruits"),
+            ("Lemon", "Fruits"), ("Lime", "Fruits"), ("Amla", "Fruits"), ("Guava", "Fruits"),
+            ("Papaya", "Fruits"), ("Pineapple", "Fruits"), ("Jackfruit", "Fruits"), ("Watermelon", "Fruits"),
+            ("Pomegranate", "Fruits"), ("Dates", "Fruits"), ("Kokum", "Fruits"), ("Bael Fruit", "Fruits"),
+            ("Wood Apple", "Fruits"), ("Star Fruit", "Fruits"),
+
+            # SPICES (WHOLE)
+            ("Cumin Seeds (Jeera)", "Spices"), ("Mustard Seeds (Kadugu)", "Spices"), ("Fenugreek Seeds (Methi)", "Spices"),
+            ("Coriander Seeds (Dhania)", "Spices"), ("Black Pepper", "Spices"), ("Red Chilli (Dried)", "Spices"),
+            ("Cloves (Lavang)", "Spices"), ("Cardamom Green (Elaichi)", "Spices"), ("Black Cardamom", "Spices"),
+            ("Cinnamon (Dalchini)", "Spices"), ("Bay Leaf (Tejpatta)", "Spices"), ("Star Anise", "Spices"),
+            ("Mace (Javitri)", "Spices"), ("Nutmeg (Jaiphal)", "Spices"), ("Fennel Seeds (Saunf)", "Spices"),
+            ("Carom Seeds (Ajwain)", "Spices"), ("Nigella Seeds (Kalonji)", "Spices"), ("Poppy Seeds", "Spices"),
+            ("Sesame Seeds (Til)", "Spices"), ("Turmeric (Manjal)", "Spices"), ("Dry Ginger (Sukku)", "Spices"),
+            ("Long Pepper (Thippili)", "Spices"), ("Kalpasi (Stone Flower)", "Spices"), ("Marathi Mokku", "Spices"),
+            ("Dried Rose Petals", "Spices"), ("Saffron (Kesar)", "Spices"),
+
+            # SPICE POWDERS
+            ("Turmeric Powder", "Spices"), ("Red Chilli Powder", "Spices"), ("Coriander Powder", "Spices"),
+            ("Cumin Powder", "Spices"), ("Garam Masala", "Spices"), ("Sambar Powder", "Spices"),
+            ("Rasam Powder", "Spices"), ("Biryani Masala", "Spices"), ("Chaat Masala", "Spices"),
+            ("Amchur (Dry Mango Powder)", "Spices"), ("Hing (Asafoetida)", "Spices"), ("Kashmiri Chilli Powder", "Spices"),
+            ("Black Pepper Powder", "Spices"), ("Meat Masala", "Spices"), ("Kitchen King Masala", "Spices"),
+
+            # OILS & FATS
+            ("Gingelly Oil (Sesame)", "Condiments"), ("Coconut Oil", "Condiments"), ("Groundnut Oil", "Condiments"),
+            ("Sunflower Oil", "Condiments"), ("Mustard Oil", "Condiments"), ("Refined Oil", "Condiments"),
+            ("Ghee", "Dairy & Eggs"), ("Butter", "Dairy & Eggs"), ("Vanaspati (Dalda)", "Condiments"),
+
+            # DAIRY
+            ("Milk", "Dairy & Eggs"), ("Curd (Yoghurt)", "Dairy & Eggs"), ("Buttermilk (Moru)", "Dairy & Eggs"),
+            ("Paneer", "Dairy & Eggs"), ("Khoya / Mawa", "Dairy & Eggs"), ("Cream", "Dairy & Eggs"),
+            ("Condensed Milk", "Dairy & Eggs"), ("Cheese", "Dairy & Eggs"),
+
+            # NUTS & DRY FRUITS
+            ("Cashew", "Pantry"), ("Almonds", "Pantry"), ("Peanuts", "Pantry"), ("Walnuts", "Pantry"),
+            ("Pistachios", "Pantry"), ("Raisins", "Pantry"), ("Dried Figs", "Pantry"), ("Dried Apricots", "Pantry"),
+            ("Charoli (Chironji)", "Pantry"), ("Melon Seeds (Magaz)", "Pantry"), ("Lotus Seeds (Makhana)", "Pantry"),
+            ("Desiccated Coconut", "Pantry"),
+
+            # SWEETENERS
+            ("Sugar", "Pantry"), ("Jaggery (Vellam)", "Pantry"), ("Palm Sugar", "Pantry"),
+            ("Coconut Sugar", "Pantry"), ("Honey", "Pantry"), ("Nolen Gur", "Pantry"), ("Mishri", "Pantry"),
+
+            # GRAINS & MILLETS
+            ("Ragi", "Pantry"), ("Bajra", "Pantry"), ("Jowar", "Pantry"), ("Foxtail Millet", "Pantry"),
+            ("Kodo Millet", "Pantry"), ("Little Millet", "Pantry"), ("Barnyard Millet", "Pantry"),
+            ("Proso Millet", "Pantry"), ("Oats", "Pantry"), ("Barley", "Pantry"),
+
+            # CONDIMENTS & PASTES
+            ("Tamarind Paste", "Condiments"), ("Ginger Garlic Paste", "Condiments"), ("Coconut Milk", "Condiments"),
+            ("Green Chilli Paste", "Condiments"), ("Tomato Paste", "Condiments"), ("Vinegar", "Condiments"),
+            ("Soy Sauce", "Condiments"),
+
+            # LEAVENING & BINDING
+            ("Baking Soda", "Pantry"), ("Baking Powder", "Pantry"), ("Yeast", "Pantry"),
+
+            # EGGS & MEAT
+            ("Egg", "Meat"), ("Chicken", "Meat"), ("Mutton / Lamb", "Meat"),
+            ("Fish (Rohu, Katla, Pomfret, Seer, Sardine, Tuna)", "Seafood"), ("Prawn", "Seafood"),
+            ("Crab", "Seafood"), ("Pork", "Meat"), ("Beef", "Meat")
         ]
         
         # Only add ingredients that don't already exist in the database
