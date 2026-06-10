@@ -204,6 +204,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         if (isOpen && highlightIndex >= 0 && highlightIndex < items.length) {
           selectIngredient(items[highlightIndex].dataset.value);
+        } else if (ingredientInput.value.trim().length > 0) {
+          selectIngredient(ingredientInput.value.trim());
         }
         break;
       case 'Escape':
