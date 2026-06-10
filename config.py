@@ -2,7 +2,7 @@ import os
 
 # Groq API Configuration
 GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "")
-GROQ_MODEL = "llama3-8b-8192"
+GROQ_MODEL = "llama-3.1-8b-instant"
 
 # Flask & Security Configuration
 # Needs a strong secret key for session management and OAuth state
