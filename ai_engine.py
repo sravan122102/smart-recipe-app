@@ -25,6 +25,7 @@ def get_client():
 
 def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=3000, retries=3):
     """Call Groq API with automatic retry on rate-limit errors."""
+    last_error_str = "Unknown API Error"
     for attempt in range(retries):
         try:
             response = get_client().chat.completions.create(
@@ -46,6 +47,7 @@ def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=3000, ret
 
         except Exception as e:
             error_str = str(e)
+            last_error_str = error_str
             if "429" in error_str or "rate_limit" in error_str.lower():
                 wait_time = (attempt + 1) * 5  # 5s, 10s, 15s (Groq resets fast)
                 print(f"[AI Engine] Rate limited. Waiting {wait_time}s (attempt {attempt + 1}/{retries})...")
@@ -53,7 +55,7 @@ def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=3000, ret
                 continue
             raise e
 
-    raise Exception("Rate limit exceeded after retries. Please try again shortly.")
+    raise Exception(f"Rate limit or API error. Exact Groq Error: {last_error_str}")
 
 
 # ── Single unified prompt — recipes + substitutions in one call ──
