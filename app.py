@@ -160,6 +160,14 @@ def create_app():
             ("Crab", "Seafood"), ("Pork", "Meat"), ("Beef", "Meat")
         ]
         
+        # Clean up old duplicate ingredients that are no longer in the master list
+        massive_names = {name for name, _ in massive_ingredients}
+        to_delete = Ingredient.query.filter(~Ingredient.name.in_(massive_names)).all()
+        if to_delete:
+            for item in to_delete:
+                db.session.delete(item)
+            db.session.commit()
+
         # Only add ingredients that don't already exist in the database
         existing_ingredients = {i.name for i in Ingredient.query.with_entities(Ingredient.name).all()}
         new_items = []
