@@ -23,7 +23,7 @@ def get_client():
     return _client
 
 
-def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=8000, retries=3):
+def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=3000, retries=3):
     """Call Groq API with automatic retry on rate-limit errors."""
     for attempt in range(retries):
         try:
@@ -143,7 +143,7 @@ def process_pipeline(ingredients: list[str]) -> dict:
     )
 
     try:
-        return _call_groq(SYSTEM_PROMPT, prompt, temperature=0.4, max_tokens=8000)
+        return _call_groq(SYSTEM_PROMPT, prompt, temperature=0.4, max_tokens=3000)
     except json.JSONDecodeError as e:
         print(f"[AI Engine] JSON parse error: {e}")
         return {"recipes": [], "error": "Failed to parse AI response"}
