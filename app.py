@@ -54,6 +54,22 @@ def create_app():
 
     with app.app_context():
         db.create_all()
+        
+        # Seed the database with default ingredients if it's empty
+        if Ingredient.query.count() == 0:
+            default_ingredients = [
+                ("Tomato", "Vegetables"), ("Onion", "Vegetables"), ("Garlic", "Vegetables"),
+                ("Chicken Breast", "Meat"), ("Beef", "Meat"), ("Eggs", "Dairy & Eggs"),
+                ("Milk", "Dairy & Eggs"), ("Cheese", "Dairy & Eggs"), ("Butter", "Dairy & Eggs"),
+                ("Flour", "Pantry"), ("Sugar", "Pantry"), ("Salt", "Pantry"),
+                ("Black Pepper", "Spices"), ("Olive Oil", "Pantry"), ("Pasta", "Pantry"),
+                ("Rice", "Pantry"), ("Potato", "Vegetables"), ("Carrot", "Vegetables"),
+                ("Bell Pepper", "Vegetables"), ("Spinach", "Vegetables"), ("Noodles", "Pantry"),
+                ("Soy Sauce", "Pantry"), ("Ginger", "Vegetables"), ("Lemon", "Fruits")
+            ]
+            for name, category in default_ingredients:
+                db.session.add(Ingredient(name=name, category=category))
+            db.session.commit()
 
     # ── Auth Routes ──────────────────────────────────────────────────────
 
