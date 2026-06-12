@@ -241,7 +241,76 @@ def create_app():
 
             # GRAINS (International)
             ("Quinoa", "Pantry"), ("Couscous", "Pantry"), ("Bulgur Wheat", "Pantry"),
-            ("Freekeh", "Pantry"), ("Farro", "Pantry"), ("Polenta", "Pantry"), ("Arborio Rice", "Pantry")
+            ("Freekeh", "Pantry"), ("Farro", "Pantry"), ("Polenta", "Pantry"), ("Arborio Rice", "Pantry"),
+
+            # SOUTH INDIAN & TAMIL SPECIFIC
+            ("Keerai (Purslane)", "Vegetables"), ("Ponnanganni Keerai", "Vegetables"), ("Manathakkali Keerai", "Vegetables"),
+            ("Agathi Keerai", "Vegetables"), ("Mudakathan Keerai", "Vegetables"), ("Sirukeerai", "Vegetables"),
+            ("Siru Paruppu", "Pantry"), ("Mochai (Field Beans)", "Pantry"), ("Sundakkai (Turkey Berry)", "Vegetables"),
+            ("Manathakkali Vathal", "Pantry"), ("Sundakkai Vathal", "Pantry"), ("Vengaya Thol", "Pantry"),
+            ("Neem Flower (Veppam Poo)", "Spices"), ("Banana Leaf", "Pantry"), ("Lotus Root", "Vegetables"),
+            ("Taro Stem", "Vegetables"), ("Raw Coconut Flower", "Vegetables"), ("Jackfruit Seeds", "Pantry"),
+            ("Mango Kernel", "Pantry"), ("Breadfruit", "Vegetables"), ("Nendran Banana", "Fruits"),
+            ("Red Banana", "Fruits"), ("Poovan Banana", "Fruits"), ("Karpooravalli", "Herbs"),
+            ("Tulsi (Holy Basil)", "Herbs"), ("Pandan Leaf", "Herbs"),
+
+            # TAMIL NADU SPICES & MASALAS
+            ("Kandathippili", "Spices"), ("Omavalli (Ajwain Leaf)", "Herbs"), ("Kadalpasi (Seaweed)", "Spices"),
+            ("Nati Milagu", "Spices"), ("Pul Milagai", "Vegetables"), ("Gundu Milagai", "Spices"),
+            ("Kolumbu Podi", "Spices"), ("Vatha Kuzhambu Podi", "Spices"), ("Kootu Podi", "Spices"),
+            ("Idli Milagai Podi", "Spices"), ("Paruppu Podi", "Spices"), ("Curry Masala Powder", "Spices"),
+            ("Chettinad Masala Powder", "Spices"),
+
+            # KERALA & ANDHRA SPECIFIC
+            ("Kudampuli", "Spices"), ("Coconut Vinegar", "Condiments"), ("Thalippu Vengayam", "Vegetables"),
+            ("Nadan Kozhi", "Meat"), ("Koorka", "Vegetables"), ("Vathal", "Pantry"),
+            ("Gongura", "Vegetables"), ("Chepalu", "Seafood"), ("Avakai", "Condiments"), ("Dosakaya", "Vegetables"),
+
+            # NORTH & WEST INDIAN SPECIFIC
+            ("Sarson (Mustard Greens)", "Vegetables"), ("Bathua", "Vegetables"), ("Tinda", "Vegetables"),
+            ("Parwal", "Vegetables"), ("Singhara", "Vegetables"), ("Kamal Kakdi", "Vegetables"),
+            ("Betel Leaf", "Herbs"), ("Dried Pomegranate Seeds", "Spices"), ("Sattu", "Pantry"),
+            ("Mishti Doi", "Dairy & Eggs"), ("Tirphal", "Spices"), ("Tamdi Bhaji", "Vegetables"),
+            ("Suva Bhaji", "Vegetables"), ("Vatana", "Pantry"), ("Dalimbi", "Pantry"),
+            ("Sol Kadhi base", "Condiments"), ("Amsul", "Spices"), ("Vindaloo Masala", "Spices"),
+            ("Recheado Masala", "Spices"),
+
+            # EAST INDIAN & RAJASTHANI SPECIFIC
+            ("Shorshe (Mustard Paste)", "Condiments"), ("Radhuni", "Spices"), ("Panch Phoron", "Spices"),
+            ("Hilsa Fish", "Seafood"), ("Bori", "Pantry"), ("Potol", "Vegetables"), ("Gondhoraj Lebu", "Fruits"),
+            ("Ker", "Pantry"), ("Sangri", "Pantry"), ("Ker Sangri", "Pantry"), ("Surti Papdi", "Vegetables"),
+            ("Valor", "Vegetables"), ("Kand", "Vegetables"), ("Khatta Dhokla base", "Pantry"),
+
+            # NORTHEAST INDIA SPECIFIC
+            ("Bhut Jolokia", "Vegetables"), ("Naga Chilli", "Vegetables"), ("Bamboo Shoot", "Vegetables"),
+            ("Axone", "Condiments"), ("Kingfish", "Seafood"), ("Smoked Pork", "Meat"), ("Dried Fish (Shidal)", "Seafood"),
+            ("Black Sesame", "Spices"), ("Perilla Seeds", "Spices"), ("Taro Leaves", "Vegetables"),
+            ("Wild Mushroom", "Vegetables"), ("Rice Beer", "Condiments"), ("Lakadong Turmeric", "Spices"),
+
+            # INTERNATIONAL MISSING
+            ("Miso Paste", "Condiments"), ("Gochujang", "Condiments"), ("Harissa Paste", "Condiments"),
+            ("Sambal Oelek", "Condiments"), ("Doubanjiang", "Condiments"), ("Shaoxing Rice Wine", "Condiments"),
+            ("Mirin", "Condiments"), ("Sake", "Condiments"), ("Dashi Stock", "Pantry"), ("Nori", "Pantry"),
+            ("Wakame Seaweed", "Pantry"), ("Kombu", "Pantry"), ("Bonito Flakes", "Pantry"), ("Chickpea Brine", "Pantry"),
+            ("Nutritional Yeast", "Pantry"), ("Liquid Smoke", "Condiments"), ("Capers", "Condiments"),
+            ("Anchovies", "Seafood"), ("Sun Dried Olives", "Pantry"), ("Preserved Lemon", "Condiments"),
+            ("Za'atar", "Spices"), ("Sumac", "Spices"), ("Baharat Spice Mix", "Spices"), ("Ras el Hanout", "Spices"),
+            ("Smoked Paprika", "Spices"), ("Sweet Paprika", "Spices"), ("Chipotle Pepper", "Spices"),
+            ("Ancho Chilli", "Spices"), ("Guajillo Chilli", "Spices"), ("Epazote", "Herbs"),
+
+            # MISSING SEAFOOD
+            ("Mackerel", "Seafood"), ("Sardine", "Seafood"), ("Tilapia", "Seafood"), ("Catfish", "Seafood"),
+            ("Squid / Calamari", "Seafood"), ("Lobster", "Seafood"), ("Oyster", "Seafood"), ("Mussel", "Seafood"),
+            ("Clam", "Seafood"), ("Dried Shrimp", "Seafood"), ("Bombay Duck", "Seafood"), ("Rawas", "Seafood"),
+            ("Bangda", "Seafood"),
+
+            # MISSING FRUITS
+            ("Custard Apple", "Fruits"), ("Sapota (Chikoo)", "Fruits"), ("Fig (Fresh)", "Fruits"), ("Mulberry", "Fruits"),
+            ("Dragon Fruit", "Fruits"), ("Passion Fruit", "Fruits"), ("Kiwi", "Fruits"), ("Strawberry", "Fruits"),
+            ("Blueberry", "Fruits"), ("Raspberry", "Fruits"), ("Cranberry", "Fruits"), ("Peach", "Fruits"),
+            ("Plum", "Fruits"), ("Apricot (Fresh)", "Fruits"), ("Grape", "Fruits"), ("Orange", "Fruits"),
+            ("Sweet Lime (Mosambi)", "Fruits"), ("Grapefruit", "Fruits"), ("Tangerine", "Fruits"),
+            ("Pear", "Fruits"), ("Apple", "Fruits"), ("Gooseberry", "Fruits")
         ]
         
         # Clean up old duplicate ingredients that are no longer in the master list
