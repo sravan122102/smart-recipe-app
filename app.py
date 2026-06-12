@@ -158,7 +158,90 @@ def create_app():
             # EGGS & MEAT
             ("Egg", "Meat"), ("Chicken", "Meat"), ("Mutton / Lamb", "Meat"),
             ("Fish (Rohu, Katla, Pomfret, Seer, Sardine, Tuna)", "Seafood"), ("Prawn", "Seafood"),
-            ("Crab", "Seafood"), ("Pork", "Meat"), ("Beef", "Meat")
+            ("Crab", "Seafood"), ("Pork", "Meat"), ("Beef", "Meat"),
+
+            # MODERN & RESTAURANT-STYLE VEGETABLES
+            ("Baby Corn", "Vegetables"), ("Sweet Corn", "Vegetables"), ("Broccoli", "Vegetables"),
+            ("Zucchini", "Vegetables"), ("Celery", "Vegetables"), ("Lettuce", "Vegetables"),
+            ("Iceberg Lettuce", "Vegetables"), ("Cherry Tomato", "Vegetables"), ("Sun Dried Tomato", "Vegetables"),
+            ("Bell Pepper", "Vegetables"), ("Asparagus", "Vegetables"), ("Avocado", "Vegetables"),
+            ("Artichoke", "Vegetables"), ("Leek", "Vegetables"), ("Bok Choy", "Vegetables"),
+            ("Purple Cabbage", "Vegetables"), ("Baby Spinach", "Vegetables"), ("Arugula", "Vegetables"),
+            ("Mushroom", "Vegetables"), ("Olives", "Vegetables"), ("Jalapeno", "Vegetables"), ("Habanero Chilli", "Vegetables"),
+
+            # NOODLES & PASTA
+            ("Hakka Noodles", "Pantry"), ("Rice Noodles", "Pantry"), ("Vermicelli", "Pantry"),
+            ("Spaghetti", "Pantry"), ("Penne", "Pantry"), ("Macaroni", "Pantry"), ("Fusilli", "Pantry"),
+            ("Lasagne Sheets", "Pantry"), ("Ramen Noodles", "Pantry"), ("Glass Noodles", "Pantry"), ("Udon Noodles", "Pantry"),
+
+            # SAUCES & CONDIMENTS (Modern)
+            ("Soy Sauce", "Condiments"), ("Oyster Sauce", "Condiments"), ("Fish Sauce", "Condiments"),
+            ("Schezwan Sauce", "Condiments"), ("Hoisin Sauce", "Condiments"), ("Sriracha Sauce", "Condiments"),
+            ("Tabasco Sauce", "Condiments"), ("Worcestershire Sauce", "Condiments"), ("Tomato Ketchup", "Condiments"),
+            ("Mayonnaise", "Condiments"), ("Mustard Sauce", "Condiments"), ("Barbecue Sauce", "Condiments"),
+            ("Hot Sauce", "Condiments"), ("Teriyaki Sauce", "Condiments"), ("Sweet Chilli Sauce", "Condiments"),
+            ("Pasta Sauce", "Condiments"), ("Pesto Sauce", "Condiments"), ("Hummus", "Condiments"), ("Tzatziki", "Condiments"),
+
+            # CHEESE VARIETIES
+            ("Mozzarella", "Dairy & Eggs"), ("Cheddar", "Dairy & Eggs"), ("Parmesan", "Dairy & Eggs"),
+            ("Feta", "Dairy & Eggs"), ("Cream Cheese", "Dairy & Eggs"), ("Ricotta", "Dairy & Eggs"),
+            ("Gouda", "Dairy & Eggs"), ("Processed Cheese Slices", "Dairy & Eggs"), ("Cheese Spread", "Dairy & Eggs"),
+            ("Bocconcini", "Dairy & Eggs"),
+
+            # DAIRY & ALTERNATIVES (Modern)
+            ("Whipping Cream", "Dairy & Eggs"), ("Heavy Cream", "Dairy & Eggs"), ("Sour Cream", "Dairy & Eggs"),
+            ("Crème Fraîche", "Dairy & Eggs"), ("Greek Yoghurt", "Dairy & Eggs"), ("Almond Milk", "Dairy & Eggs"),
+            ("Oat Milk", "Dairy & Eggs"), ("Coconut Milk (Canned)", "Dairy & Eggs"), ("Coconut Cream", "Dairy & Eggs"),
+            ("Evaporated Milk", "Dairy & Eggs"),
+
+            # HERBS (Fresh & Dried)
+            ("Basil", "Herbs"), ("Oregano", "Herbs"), ("Thyme", "Herbs"), ("Rosemary", "Herbs"),
+            ("Parsley", "Herbs"), ("Chives", "Herbs"), ("Dill", "Herbs"), ("Tarragon", "Herbs"),
+            ("Sage", "Herbs"), ("Bay Leaves", "Herbs"), ("Lemongrass", "Herbs"), ("Kaffir Lime Leaves", "Herbs"),
+
+            # BAKING INGREDIENTS
+            ("All Purpose Flour (Maida)", "Pantry"), ("Bread Flour", "Pantry"), ("Almond Flour", "Pantry"),
+            ("Cocoa Powder", "Pantry"), ("Dark Chocolate", "Pantry"), ("Milk Chocolate", "Pantry"),
+            ("White Chocolate", "Pantry"), ("Chocolate Chips", "Pantry"), ("Vanilla Extract", "Pantry"),
+            ("Vanilla Essence", "Pantry"), ("Baking Soda", "Pantry"), ("Baking Powder", "Pantry"),
+            ("Dry Yeast", "Pantry"), ("Instant Yeast", "Pantry"), ("Gelatin", "Pantry"), ("Agar Agar", "Pantry"),
+            ("Cornstarch", "Pantry"), ("Arrowroot Powder", "Pantry"), ("Cream of Tartar", "Pantry"),
+            ("Food Colouring", "Pantry"), ("Edible Glitter", "Pantry"), ("Sprinkles", "Pantry"),
+            ("Icing Sugar", "Pantry"), ("Brown Sugar", "Pantry"), ("Demerara Sugar", "Pantry"), ("Caster Sugar", "Pantry"),
+
+            # OILS (Modern)
+            ("Olive Oil", "Condiments"), ("Extra Virgin Olive Oil", "Condiments"), ("Avocado Oil", "Condiments"),
+            ("Canola Oil", "Condiments"), ("Rice Bran Oil", "Condiments"), ("Flaxseed Oil", "Condiments"),
+            ("Truffle Oil", "Condiments"), ("Sesame Oil (Toasted)", "Condiments"),
+
+            # VINEGARS
+            ("Apple Cider Vinegar", "Condiments"), ("White Vinegar", "Condiments"), ("Balsamic Vinegar", "Condiments"),
+            ("Red Wine Vinegar", "Condiments"), ("Rice Wine Vinegar", "Condiments"),
+
+            # SPREADS & BUTTERS
+            ("Peanut Butter", "Condiments"), ("Almond Butter", "Condiments"), ("Nutella", "Condiments"),
+            ("Tahini", "Condiments"), ("Jam / Fruit Preserves", "Condiments"), ("Marmalade", "Condiments"),
+            ("Salted Butter", "Dairy & Eggs"), ("Unsalted Butter", "Dairy & Eggs"),
+
+            # BREADS & WRAPS
+            ("White Bread", "Pantry"), ("Brown Bread", "Pantry"), ("Multigrain Bread", "Pantry"),
+            ("Sourdough Bread", "Pantry"), ("Pita Bread", "Pantry"), ("Tortilla Wrap", "Pantry"),
+            ("Burger Buns", "Pantry"), ("Hot Dog Buns", "Pantry"), ("Focaccia", "Pantry"),
+            ("Ciabatta", "Pantry"), ("Bagel", "Pantry"), ("Croissant", "Pantry"),
+
+            # CANNED & PACKAGED
+            ("Canned Tomatoes", "Pantry"), ("Canned Chickpeas", "Pantry"), ("Canned Kidney Beans", "Pantry"),
+            ("Canned Corn", "Pantry"), ("Canned Tuna", "Pantry"), ("Tomato Puree (Packaged)", "Pantry"),
+            ("Vegetable / Chicken Stock", "Pantry"), ("Stock Cubes", "Pantry"),
+
+            # PROTEINS (Modern)
+            ("Tofu", "Dairy & Eggs"), ("Tempeh", "Dairy & Eggs"), ("Soya Chunks", "Dairy & Eggs"),
+            ("TVP", "Pantry"), ("Paneer", "Dairy & Eggs"), ("Seitan", "Meat"),
+            ("Edamame", "Vegetables"), ("Smoked Salmon", "Seafood"), ("Salami", "Meat"), ("Pepperoni", "Meat"),
+
+            # GRAINS (International)
+            ("Quinoa", "Pantry"), ("Couscous", "Pantry"), ("Bulgur Wheat", "Pantry"),
+            ("Freekeh", "Pantry"), ("Farro", "Pantry"), ("Polenta", "Pantry"), ("Arborio Rice", "Pantry")
         ]
         
         # Clean up old duplicate ingredients that are no longer in the master list
