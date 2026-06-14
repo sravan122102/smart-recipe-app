@@ -311,7 +311,12 @@ def create_app():
             ("Blueberry", "Fruits"), ("Raspberry", "Fruits"), ("Cranberry", "Fruits"), ("Peach", "Fruits"),
             ("Plum", "Fruits"), ("Apricot (Fresh)", "Fruits"), ("Grape", "Fruits"), ("Orange", "Fruits"),
             ("Sweet Lime (Mosambi)", "Fruits"), ("Grapefruit", "Fruits"), ("Tangerine", "Fruits"),
-            ("Pear", "Fruits"), ("Apple", "Fruits"), ("Gooseberry", "Fruits")
+            ("Pear", "Fruits"), ("Apple", "Fruits"), ("Gooseberry", "Fruits"),
+
+            # MUSHROOMS
+            ("Button Mushroom", "Vegetables"), ("Oyster Mushroom", "Vegetables"), ("Shiitake Mushroom", "Vegetables"),
+            ("Portobello Mushroom", "Vegetables"), ("King Oyster Mushroom", "Vegetables"), ("Straw Mushroom", "Vegetables"),
+            ("Milky Mushroom", "Vegetables"), ("Paddy Straw Mushroom", "Vegetables"), ("Dhingri Mushroom", "Vegetables")
         ]
         
         # Clean up old duplicate ingredients that are no longer in the master list
