@@ -15,6 +15,7 @@ Routes:
 
 import os
 import json
+import hashlib
 from datetime import datetime, timezone, timedelta
 from flask import Flask, render_template, request, jsonify, redirect, url_for, session
 from authlib.integrations.flask_client import OAuth
@@ -472,7 +473,8 @@ def create_app():
         ingredients = [ing.strip().title() for ing in ingredients if ing.strip()]
 
         # Check cache first
-        cache_key = "|".join(sorted(ingredients)).lower()
+        raw_key = "|".join(sorted(ingredients)).lower()
+        cache_key = hashlib.md5(raw_key.encode()).hexdigest()
         cached = SearchCache.query.filter_by(ingredient_key=cache_key).first()
 
         if cached:

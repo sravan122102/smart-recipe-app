@@ -591,7 +591,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const formatQuantity = (ing) => {
       if (ing.amount == null) return ing.original_string || '';
       // Scale amount and format cleanly (e.g. 1.5 instead of 1.5000000)
-      const scaled = (ing.amount * multiplier);
+      const scaled = (Number(ing.amount) * multiplier);
+      if (isNaN(scaled)) return ing.original_string || '';
+      
       // Show up to 1 decimal place, strip trailing zeroes
       const formattedNum = Number.isInteger(scaled) ? scaled : scaled.toFixed(1).replace(/\.0$/, '');
       const unitStr = ing.unit ? ` ${ing.unit}` : '';
