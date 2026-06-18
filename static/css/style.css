@@ -1313,7 +1313,7 @@ body::before {
    SCREEN 0: LANDING (AUTH)
    ═══════════════════════════════════════════════════════════════ */
 
-#landing-screen {
+#landing-screen.screen-active {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1331,7 +1331,6 @@ body::before {
     border-radius: 24px;
     border: 1px solid var(--border-subtle);
     box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .landing-logo {
