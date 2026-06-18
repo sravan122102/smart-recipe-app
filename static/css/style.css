@@ -1308,3 +1308,64 @@ body::before {
         gap: 8px;
     }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SCREEN 0: LANDING (AUTH)
+   ═══════════════════════════════════════════════════════════════ */
+
+#landing-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - var(--nav-height));
+    padding: 24px;
+    background: radial-gradient(circle at top right, rgba(249,115,22,0.05), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(245,158,11,0.05), transparent 40%);
+}
+
+.landing-content {
+    text-align: center;
+    max-width: 500px;
+    background: var(--bg-card);
+    padding: 48px;
+    border-radius: 24px;
+    border: 1px solid var(--border-subtle);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.landing-logo {
+    font-size: 4rem;
+    margin-bottom: 24px;
+    display: inline-block;
+    filter: drop-shadow(0 0 16px rgba(249,115,22,0.3));
+}
+
+.landing-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.landing-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.landing-btn {
+    width: 100%;
+    padding: 16px 24px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.google-icon {
+    width: 24px;
+    height: 24px;
+}

@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentResults = [];
 
   // ─── DOM References ─────────────────────────────────────
+  const landingScreen       = document.getElementById('landing-screen');
   const inputScreen         = document.getElementById('input-screen');
   const resultsScreen       = document.getElementById('results-screen');
   const detailScreen        = document.getElementById('detail-screen');
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Dashboard Elements
   const dashboardScreen     = document.getElementById('dashboard-screen');
   const wishlistContainer   = document.getElementById('wishlist-cards-container');
+  const landingLoginBtn     = document.getElementById('landing-login-btn');
 
   // Auth State
   let currentUser = null;
@@ -61,9 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
         currentUser = userData;
         navLoginBtn.classList.add('hidden');
         navUserMenu.classList.remove('hidden');
+        showScreen('input-screen');
       } else {
         navLoginBtn.classList.remove('hidden');
         navUserMenu.classList.add('hidden');
+        showScreen('landing-screen');
       }
     } catch (err) {
       console.error('Failed to initialize:', err);
@@ -103,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth & Nav Listeners
     navLoginBtn?.addEventListener('click', () => window.location.href = '/login');
+    landingLoginBtn?.addEventListener('click', () => window.location.href = '/login');
     navLogoutBtn?.addEventListener('click', () => window.location.href = '/logout');
     navDashboardBtn?.addEventListener('click', loadDashboard);
   };
@@ -695,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ─── 7. Screen Navigation ──────────────────────────────
   const showScreen = (screenId) => {
-    [inputScreen, resultsScreen, detailScreen, dashboardScreen].forEach(s => {
+    [landingScreen, inputScreen, resultsScreen, detailScreen, dashboardScreen].forEach(s => {
       if (s) s.classList.remove('screen-active');
     });
 
