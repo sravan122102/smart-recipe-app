@@ -210,7 +210,14 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isOpen && highlightIndex >= 0 && highlightIndex < items.length) {
           selectIngredient(items[highlightIndex].dataset.value);
         } else if (ingredientInput.value.trim().length > 0) {
-          selectIngredient(ingredientInput.value.trim());
+          // Only allow ingredients that exist in the master list (case-insensitive)
+          const typed = ingredientInput.value.trim().toLowerCase();
+          const match = allIngredients.find(name => name.toLowerCase() === typed);
+          if (match) {
+            selectIngredient(match);
+          } else {
+            showToast('Please select a valid ingredient from the suggestions.', 'error');
+          }
         }
         break;
       case 'Escape':
