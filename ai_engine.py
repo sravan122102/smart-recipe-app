@@ -23,8 +23,31 @@ def get_client():
     return _client
 
 
+def _extract_json(text):
+    """Extract valid JSON from messy AI output — handles thinking tags, markdown, etc."""
+    # 1. Strip <think>...</think> blocks (some models add reasoning)
+    text = re.sub(r'<think>[\s\S]*?</think>', '', text).strip()
+    
+    # 2. Try to extract from markdown code blocks: ```json ... ``` or ``` ... ```
+    code_match = re.search(r'```(?:json)?\s*([\s\S]*?)```', text)
+    if code_match:
+        text = code_match.group(1).strip()
+    
+    # 3. Extract the outermost JSON object { ... }
+    # Find the first { and match to the last }
+    first_brace = text.find('{')
+    last_brace = text.rfind('}')
+    if first_brace != -1 and last_brace != -1 and last_brace > first_brace:
+        text = text[first_brace:last_brace + 1]
+    
+    # 4. Fix common JSON issues: trailing commas before } or ]
+    text = re.sub(r',\s*([}\]])', r'\1', text)
+    
+    return json.loads(text)
+
+
 def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=6000, retries=3):
-    """Call Groq API with automatic retry on rate-limit errors."""
+    """Call Groq API with automatic retry on rate-limit AND parse errors."""
     last_error_str = "Unknown API Error"
     for attempt in range(retries):
         try:
@@ -39,25 +62,26 @@ def _call_groq(system_prompt, user_prompt, temperature=0.4, max_tokens=6000, ret
             )
 
             result_text = response.choices[0].message.content.strip()
-            
-            # Extract JSON block using regex to ignore any surrounding conversational text
-            json_match = re.search(r"\{[\s\S]*\}", result_text)
-            if json_match:
-                result_text = json_match.group(0)
-                
-            return json.loads(result_text)
+            return _extract_json(result_text)
+
+        except json.JSONDecodeError as e:
+            last_error_str = f"JSON parse error: {e}"
+            print(f"[AI Engine] {last_error_str} (attempt {attempt + 1}/{retries})")
+            # Retry with slightly higher temperature to get different output
+            temperature = min(temperature + 0.1, 0.8)
+            continue
 
         except Exception as e:
             error_str = str(e)
             last_error_str = error_str
             if "429" in error_str or "rate_limit" in error_str.lower():
-                wait_time = (attempt + 1) * 5  # 5s, 10s, 15s (Groq resets fast)
+                wait_time = (attempt + 1) * 5
                 print(f"[AI Engine] Rate limited. Waiting {wait_time}s (attempt {attempt + 1}/{retries})...")
                 time.sleep(wait_time)
                 continue
             raise e
 
-    raise Exception(f"Rate limit or API error. Exact Groq Error: {last_error_str}")
+    raise Exception(f"AI engine failed after {retries} attempts. Last error: {last_error_str}")
 
 
 # ── Single unified prompt — recipes + substitutions in one call ──
